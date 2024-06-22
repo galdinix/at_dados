@@ -1,0 +1,34 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "C:\\Users\\Robers\\eventos.db",
+            "name": "eventos"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "biblioteca",
+            "database": "C:\\Users\\Robers\\biblioteca.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "gerenciamento_alunos",
+            "database": "C:\\Users\\Robers\\universidade.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "autores",
+            "database": "C:\\Users\\Robers\\autores.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "bibli",
+            "database": "${workspaceFolder:at_dados}/bibli.db"
+        }
+    ]
+}

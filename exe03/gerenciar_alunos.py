@@ -97,14 +97,14 @@ cadastrar_disciplina('Física')
 cadastrar_disciplina('Química')
 cadastrar_disciplina('Biologia')
 
-matricular_aluno(1, 1)  # Alice em Matemática
-matricular_aluno(1, 2)  # Alice em Física
-matricular_aluno(2, 3)  # Bob em Química
-matricular_aluno(3, 4)  # Carol em Biologia
-matricular_aluno(3, 3)  # Carol em Química
-matricular_aluno(3, 1)  # Carol em Matemática
+matricular_aluno(1, 1)  
+matricular_aluno(1, 2)  
+matricular_aluno(2, 3)  
+matricular_aluno(3, 4)  
+matricular_aluno(3, 3)  
+matricular_aluno(3, 1)  
 
-# Função para exibir o menu e obter a escolha do usuário
+
 def exibir_menu():
     print("\nMenu:")
     print("1. Cadastrar aluno")

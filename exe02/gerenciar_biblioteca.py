@@ -1,25 +1,25 @@
 import sqlite3
 
 # Conectar ao banco de dados SQLite (ou criar se não existir)
-conn = sqlite3.connect('autores.db')
+conn = sqlite3.connect('biblioteca.db')
 cursor = conn.cursor()
 
 # Criar tabelas
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Autor (
     id_autor INTEGER PRIMARY KEY,
-    nome TEXT NOT NULL,
-    nacionalidade TEXT,
-    data_nascimento TEXT
+    nome VARCHAR(100) NOT NULL,
+    nacionalidade VARCHAR(50),
+    data_nascimento DATE
 )
 ''')
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Livro (
     id_livro INTEGER PRIMARY KEY,
-    titulo TEXT NOT NULL,
+    titulo VARCHAR(200) NOT NULL,
     ano INTEGER,
-    idioma TEXT,
+    idioma VARCHAR(50),
     id_autor INTEGER,
     id_editora INTEGER,
     id_categoria INTEGER,
@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS Livro (
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Categoria (
     id_categoria INTEGER PRIMARY KEY,
-    nome TEXT NOT NULL
+    nome VARCHAR(100) NOT NULL
 )
 ''')
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS Editora (
     id_editora INTEGER PRIMARY KEY,
-    nome TEXT NOT NULL
+    nome VARCHAR(100) NOT NULL
 )
 ''')
 
@@ -88,7 +88,15 @@ def cadastrar_livro():
     conn.commit()
     print("Livro cadastrado com sucesso.")
 
+def listar(tabela):
+    query = f'SELECT * FROM {tabela}'
+    cursor.execute(query)
+    registros = cursor.fetchall()
+    for registro in registros:
+        print(registro)
+
 def editar_autor():
+    listar('Autor')
     id_autor = int(input("ID do Autor a ser editado: "))
     nome = input("Novo nome do Autor: ")
     nacionalidade = input("Nova nacionalidade: ")
@@ -98,6 +106,7 @@ def editar_autor():
     print(f"Autor com ID {id_autor} atualizado.")
 
 def editar_livro():
+    listar('Livro')
     id_livro = int(input("ID do Livro a ser editado: "))
     titulo = input("Novo título do Livro: ")
     ano = input("Novo ano de Publicação: ")
@@ -110,12 +119,14 @@ def editar_livro():
     print(f"Livro com ID {id_livro} atualizado.")
 
 def excluir_autor():
+    listar('Autor')
     id_autor = int(input("ID do Autor a ser excluído: "))
     cursor.execute('DELETE FROM Autor WHERE id_autor=?', (id_autor,))
     conn.commit()
     print(f"Autor com ID {id_autor} excluído com sucesso.")
 
 def excluir_livro():
+    listar('Livro')
     id_livro = int(input("ID do Livro a ser excluído: "))
     cursor.execute('DELETE FROM Livro WHERE id_livro=?', (id_livro,))
     conn.commit()
@@ -153,50 +164,4 @@ def imprimir_livros_por_autor():
         print("-" * 72)
         for livro in livros:
             id_livro, titulo, ano, idioma, id_autor, id_editora, id_categoria = livro
-            print(f"{id_livro:<3} | {titulo:<20} | {ano:<4} | {idioma:<8} | {id_editora:<13} | {id_categoria}")
-    else:
-        print(f"Nenhum livro encontrado para o Autor ID {id_autor}.")
-    print("-" * 72)
-
-# Menu principal
-while True:
-    print("\nMenu:")
-    print("1. Cadastrar autor")
-    print("2. Cadastrar livro")
-    print("3. Editar autor")
-    print("4. Editar livro")
-    print("5. Excluir autor")
-    print("6. Excluir livro")
-    print("7. Imprimir todos os autores")
-    print("8. Imprimir todos os livros")
-    print("9. Imprimir todos os livros de um autor")
-    print("10. Sair")
-
-    opcao = input("Escolha uma opção: ")
-
-    if opcao == '1':
-        cadastrar_autor()
-    elif opcao == '2':
-        cadastrar_livro()
-    elif opcao == '3':
-        editar_autor()
-    elif opcao == '4':
-        editar_livro()
-    elif opcao == '5':
-        excluir_autor()
-    elif opcao == '6':
-        excluir_livro()
-    elif opcao == '7':
-        imprimir_todos_autores()
-    elif opcao == '8':
-        imprimir_todos_livros()
-    elif opcao == '9':
-        imprimir_livros_por_autor()
-    elif opcao == '10':
-        print("Saindo...")
-        break
-    else:
-        print("Opção inválida. Tente novamente.")
-
-# Fechar conexão com o banco de dados
-conn.close()
+            print(f"{id_livro:<3} | {titulo:<20} | {ano:<4} | {idioma:<8} | {id}")
